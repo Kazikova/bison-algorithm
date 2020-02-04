@@ -19,11 +19,12 @@ FILES
 > PSO.py > Particle Swarm Optimization algorithm for comparison. Based on the EvoloPy library, modified for the use of this code.
 > CS.py > Cuckoo Search algorithm for comparison. Based on the EvoloPy library, modified for the use of this code.
 
-If PSO and CS used, please, cite: Faris, Hossam & Aljarah, Ibrahim & Mirjalili, Seyedali & Castillo, Pedro & Merelo Guervós, Juan. (2016). EvoloPy: An Open-Source Nature-Inspired Optimization Framework in Python. 10.5220/0006048201710177. 
+If PSO and CS used, please, cite: Faris, Hossam & Aljarah, Ibrahim & Mirjalili, Seyedali & Castillo, Pedro & Merelo GuervÃ³s, Juan. (2016). EvoloPy: An Open-Source Nature-Inspired Optimization Framework in Python. 10.5220/0006048201710177. 
 
 
 
 HOW TO USE THE ALGORITHM FOR OPTIMIZATION?
+> 1. Unzip the input zips to use the IEEE CEC Benchmarks
 
 In compare.py:
 > define optimized problem 
@@ -44,5 +45,6 @@ VERSION OF PYTHON AND LIBRARIES
 
 
 With the wish of many great optimization successes,
+
 Yours sincerely,
 Anezka Kazikova
