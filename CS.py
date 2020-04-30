@@ -10,6 +10,7 @@ import numpy
 import random
 import time
 import testing
+import benchmark
 
 func_num = 0
 
@@ -28,7 +29,8 @@ def get_cuckoos(nest, best, lb, ub, n, dim):
         v = numpy.random.randn(len(s))
         step = u / abs(v) ** (1 / beta)
 
-        stepsize = 0.01 * (step * (s - best))
+        alpha = 0.01 # I believe, this number should be the Alpha from the paper "Cuckoo Search via Levy Flight, Yang & Deb 2010"
+        stepsize = alpha * (step * (s - best))
 
         s = s + stepsize * numpy.random.randn(len(s))
 
@@ -92,19 +94,22 @@ def CS(number_of_runs, problem_definition, test_flags):
     up_bound  = problem_definition['up_bound']
     objf      = problem_definition['function']
     func_num =  problem_definition['func_num']
+    filename = problem_definition['filename']
 
-
-    max_evaluation = 10000 * dimension
+    if test_flags['complexity_computation']:
+        max_evaluation = 200000
+    else:
+        max_evaluation = benchmark.get_max_fes(dimension)
     max_iteration = round(max_evaluation/n/2)
     average_convergence_curve = numpy.zeros((number_of_runs, max_iteration))
-    all_errors = numpy.zeros((number_of_runs, 14))
+    all_errors = numpy.zeros((number_of_runs, len(benchmark.when_to_record_results(dimension, objf))))
     evaluations_curve = numpy.zeros(max_iteration)
     statistics = numpy.zeros(number_of_runs)
     best_cuckoo = [0] * dimension
     best_cuckoo_score = float("inf")
 
     for runs in range(number_of_runs):
-        save_errors_at = [0.01, 0.02, 0.03, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+        save_errors_at = benchmark.when_to_record_results(dimension, objf)
         evaluations = 0
         # Discovery rate of alien eggs/solutions
         pa = 0.25
@@ -121,7 +126,7 @@ def CS(number_of_runs, problem_definition, test_flags):
         new_nest = numpy.zeros((n, dimension))
         new_nest = numpy.copy(nest)
 
-        bestnest = [0] * dimension;
+        bestnest = [0] * dimension
 
         fitness = numpy.zeros(n)
         fitness.fill(float("inf"))
@@ -150,8 +155,8 @@ def CS(number_of_runs, problem_definition, test_flags):
             if test_convergence:
                 convergence.append(fmin)
                 evaluations_curve[iter] = evaluations
-            if test_error_values and evaluations >= save_errors_at[0] * max_evaluation:
-                convergence_errors.append(fmin - (func_num*100))
+            if test_error_values and evaluations >= save_errors_at[0]:
+                convergence_errors.append(fmin - benchmark.known_optimum_value(func_num))
                 save_errors_at.pop(0)
 
         if test_convergence:
@@ -173,7 +178,7 @@ def CS(number_of_runs, problem_definition, test_flags):
         statistics = testing.evaluate_all_statistics(statistics)
 
     if test_error_values:
-        filename = 'cec2015/cs_' + str(func_num) + '_' + str(dimension) + '.csv'
+        filename = filename + '/cs_' + str(func_num) + '_' + str(dimension) + '.csv'
         testing.save_errors_to_file(all_errors, filename)
 
 
