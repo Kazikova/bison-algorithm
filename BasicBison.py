@@ -45,7 +45,7 @@ boundary_politics = 'hypersphere'  # border strategies were compared at paper:
 # ~ Run Support Mechanism ~
 # This improvement of the Basic Bison Algorithm significantly raises the utilization of explored solutions.
 # When a bison from the running group finds PROMISING SOLUTION, the swarming group tries to swarm closer to the
-# successful runner in NEXT FEW ITERATIONS. (Preliminary recommended value is 2 meaning 1 next iteration)
+# successful runner in NEXT FEW ITERATIONS. (Preliminary recommended value is 2.)
 
 # The Run Support Strategy cite as:
 # "Kazikova, A., Pluhacek, M., Kadavy, T., & Senkerik, R. (2018, September).
