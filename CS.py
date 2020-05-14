@@ -99,7 +99,7 @@ def CS(number_of_runs, problem_definition, test_flags):
     if test_flags['complexity_computation']:
         max_evaluation = 200000
     else:
-        max_evaluation = benchmark.get_max_fes(dimension)
+        max_evaluation = benchmark.get_max_fes(dimension, objf)
     max_iteration = round(max_evaluation/n/2)
     average_convergence_curve = numpy.zeros((number_of_runs, max_iteration))
     all_errors = numpy.zeros((number_of_runs, len(benchmark.when_to_record_results(dimension, objf))))
