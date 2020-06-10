@@ -184,7 +184,6 @@ def bisons_move(iteration):
         if sorting_indices[better] < swarm_group_size:
             successful_runners = run_support
             center = numpy.copy(bisons[better])
-            return
     if successful_runners <= 0:
         center = compute_center()
 
